@@ -2,7 +2,7 @@
 
 namespace Controller\QuoteController;
 
-use Model\Quote\Quote;
+use Model\Quote;
 
 class QuoteController
 {
@@ -16,7 +16,7 @@ class QuoteController
     public function deleteQuote(): void {
 
     }
-    
+
 //    public function getQuote(): Quote {
 //
 //    }

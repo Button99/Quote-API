@@ -1,10 +1,9 @@
 <?php
 
-namespace Model;
+namespace Src\models;
 
 class Quote
 {
-
     protected int $id;
     protected string $name, $quote;
     protected $created_at, $added_at;
@@ -104,6 +103,8 @@ class Quote
     {
         $this->added_at = $added_at;
     }
+
+
 
 
 }
