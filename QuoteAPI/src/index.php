@@ -2,18 +2,15 @@
 declare(strict_types=1);
 
 require '../vendor/autoload.php';
-use Src\app\SqLiteConnection;
+use Src\app\MySQLConnection;
 
-$pdo= (new SqLiteConnection())->connect();
-set_exception_handler('\Src\handlers\ErrorHandler::handleException()');
-if($pdo !=null) {
-    print 'Connected';
-} else {
-    print "Error";
-}
-
+set_exception_handler('\Src\handlers\ErrorHandler::handleException');
 
 header("Content-type: application/json; charset=UTF-8");
-$controller= new \Src\controllers\QuoteController();
+
+$db= new MySQLConnection('localhost', 'Quote', 'root', '1234');
+
+$gateway= new \Src\app\QuoteGateway($db);
+$controller= new \Src\controllers\QuoteController($gateway);
 $id= '1';
-$controller->processRequest($_SERVER['REQUEST_METHOD'], '1');
+$controller->processRequest($_SERVER['REQUEST_METHOD'], null);
