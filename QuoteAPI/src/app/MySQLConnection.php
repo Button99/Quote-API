@@ -9,8 +9,11 @@ class MySQLConnection
         protected string $password) {}
 
     public function connect(): PDO {
-        $dsn= "msql:host={$this->host};dbname={$this->name};charset=utf8";
+        $dsn= "mysql:host={$this->host}:3306;dbname={$this->name};charset=utf8";
 
-        return new PDO($dsn, $this->user, $this->password);
+        return new PDO($dsn, $this->user, $this->password, [
+            PDO::ATTR_EMULATE_PREPARES =>false,
+            PDO::ATTR_STRINGIFY_FETCHES =>false
+        ]);
     }
 }
