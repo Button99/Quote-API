@@ -2,7 +2,8 @@
 declare(strict_types=1);
 
 require '../vendor/autoload.php';
-use Src\app\MySQLConnection;
+
+use src\database\MySQLConnection;
 
 set_exception_handler('\Src\handlers\ErrorHandler::handleException');
 set_exception_handler('\Src\handlers\ErrorHandler::handleError');
