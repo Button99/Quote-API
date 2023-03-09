@@ -2,8 +2,8 @@
 
 namespace Src\app;
 
-use Src\app\MySQLConnection;
 use PDO;
+use src\database\MySQLConnection;
 
 class QuoteGateway
 {

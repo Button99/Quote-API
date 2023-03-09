@@ -3,7 +3,6 @@
 namespace Src\controllers;
 
 use Src\app\QuoteGateway;
-use Src\models\Quote;
 
 class QuoteController
 {
