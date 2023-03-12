@@ -1,36 +1,36 @@
 <?php
 
-namespace Src\app;
+namespace Runner\QuoteApi\app;
 
 use PDO;
-use src\database\MySQLConnection;
+use Runner\QuoteApi\database\SqliteConnection;
 
 class QuoteGateway
 {
     private $conn;
-    public function __construct(MySQLConnection $mySQLConnection) {
-        $this->conn= $mySQLConnection->connect();
+  
+    public function __construct(SqliteConnection $sqliteConnection) {
+        $this->conn= $sqliteConnection->connect();
     }
 
     public function getAll(): array {
-        $sql= "SELECT * FROM Quote";
+        $sql= "SELECT * FROM quotes";
         $statement= $this->conn->query($sql);
         $data= ['empty'];
         while ($row= $statement->fetch(PDO::FETCH_ASSOC)) {
-            $row['is_available']= (bool) $row['is_available'];
             $data= $row;
         }
         return $data;
     }
 
     public function create(array $data): string {
-        $sql= "INSERT INTO Quote(name, quote, created_at) VALUES (:name, :quote, :created_at)";
+        $sql= 'INSERT INTO quotes(name, quote, topic) VALUES (:name, :quote, :topic)';
 
         $stmt= $this->conn->prepare($sql);
-        $stmt->bindValue(":name", $data['name'], PDO::PARAM_STR);
-        $stmt->bindValue(":quote", $data['quote'], PDO::PARAM_STR);
-
-        $stmt->bindValue(":created_at", date('y-m-d', (int)getdate()), PDO::PARAM_STR);
+        var_dump($stmt);
+        $stmt->bindValue(":name", $data['name']);
+        $stmt->bindValue(":quote", $data['quote']);
+        $stmt->bindValue(':topic', $data['topic']);
 
         $stmt->execute();
 

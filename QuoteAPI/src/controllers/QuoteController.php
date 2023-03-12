@@ -1,33 +1,32 @@
 <?php
+namespace Runner\QuoteApi\controllers;
 
-namespace Src\controllers;
+use Runner\QuoteApi\app\QuoteGateway;
 
-use Src\app\QuoteGateway;
+class QuoteController {
+  private $quoteGateway;
+  public function __construct(QuoteGateway $quoteGateway) {
+    $this->quoteGateway= $quoteGateway;
+  }
 
-class QuoteController
-{
-    // CRUD mechanism for the quotes
-
-    public function __construct(private QuoteGateway $quoteGateway) {
-
-    }
-
-    public function processRequest(string $method, ?string $id): void {
+      public function processRequest(string $method, ?string $id): void {
         if($id) {
-            $this->processResourceRequest($method, $id);
+            echo 'aa';
+              $this->processResourceRequest($method, $id);
         } else {
+          echo 'hi';
             $this->processCollectionRequest($method);
         }
     }
 
-    private function processResourceRequest(string $method, string $id): void {
+      private function processResourceRequest(string $method, string $id): void {
         $quote= $this->quoteGateway->get($id);
         if(!$quote) {
             http_response_code(404);
             echo json_encode(['message'=> 'Quote not found']);
         }
 
-        switch ($method) {
+                switch ($method) {
             case 'GET':
                 echo json_encode($quote);
                 break;
@@ -58,9 +57,9 @@ class QuoteController
                 header('Allowed methods: GET and POST');
         }
         echo json_encode($quote);
-    }
+      }
 
-    private function processCollectionRequest(string $method): void {
+      private function processCollectionRequest(string $method): void {
         switch ($method) {
             case 'GET':
                 echo json_encode($this->quoteGateway->getAll());
@@ -86,7 +85,7 @@ class QuoteController
         }
     }
 
-    protected function getValidationErrors(array $data): array {
+      protected function getValidationErrors(array $data): array {
         $errors= [];
         if(empty($data['name'])) {
             $errors[]= 'name is required';
@@ -95,4 +94,7 @@ class QuoteController
 
         return $errors;
     }
+
+  
 }
+?>

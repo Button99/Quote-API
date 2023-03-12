@@ -1,19 +1,16 @@
 {
-    "name": "user/quoteapi",
-    "description": "Quote API in PHP",
+    "name": "runner/quote-api",
+    "description": "PHP Quote API",
     "license": "MIT",
-    "scripts": {
-        "start": "php -S 127.0.0.1:8000"
-    },
     "autoload": {
         "psr-4": {
-            "Src\\": "src/"
+            "Runner\\QuoteApi\\": "src/"
         }
     },
     "authors": [
         {
             "name": "Christos Koumpis",
-            "email": "56029580+Button99@users.noreply.github.com"
+            "email": "christoskoubis@yahoo.com"
         }
     ],
     "require": {}
