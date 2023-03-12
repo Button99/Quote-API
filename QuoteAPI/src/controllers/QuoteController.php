@@ -11,11 +11,9 @@ class QuoteController {
 
       public function processRequest(string $method, ?string $id): void {
         if($id) {
-            echo 'aa';
               $this->processResourceRequest($method, $id);
         } else {
-          echo 'hi';
-            $this->processCollectionRequest($method);
+            $this->processRandomResourceRequest($method);
         }
     }
 
@@ -25,8 +23,7 @@ class QuoteController {
             http_response_code(404);
             echo json_encode(['message'=> 'Quote not found']);
         }
-
-                switch ($method) {
+        switch ($method) {
             case 'GET':
                 echo json_encode($quote);
                 break;
@@ -56,13 +53,12 @@ class QuoteController {
                 http_response_code(405);
                 header('Allowed methods: GET and POST');
         }
-        echo json_encode($quote);
       }
 
-      private function processCollectionRequest(string $method): void {
+      private function processRandomResourceRequest(string $method): void {
         switch ($method) {
             case 'GET':
-                echo json_encode($this->quoteGateway->getAll());
+                echo json_encode($this->quoteGateway->getRandom());
                 break;
             case 'POST':
                 $data= (array) json_decode(file_get_contents("php://input"), true);

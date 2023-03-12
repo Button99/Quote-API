@@ -16,9 +16,9 @@ class QuoteGateway
     public function getAll(): array {
         $sql= "SELECT * FROM quotes";
         $statement= $this->conn->query($sql);
-        $data= ['empty'];
+        $data= [];
         while ($row= $statement->fetch(PDO::FETCH_ASSOC)) {
-            $data= $row;
+            $data[]= $row;
         }
         return $data;
     }
@@ -27,7 +27,6 @@ class QuoteGateway
         $sql= 'INSERT INTO quotes(name, quote, topic) VALUES (:name, :quote, :topic)';
 
         $stmt= $this->conn->prepare($sql);
-        var_dump($stmt);
         $stmt->bindValue(":name", $data['name']);
         $stmt->bindValue(":quote", $data['quote']);
         $stmt->bindValue(':topic', $data['topic']);
@@ -37,14 +36,22 @@ class QuoteGateway
         return $this->conn->lastInsertId();
     }
 
-    public function get(string $id) {
-        $sql= "SELECT * FROM Quote WHERE id= :id";
+    public function get(string $id): array {
+        $sql= "SELECT * FROM quotes WHERE id= :id";
         $stmt= $this->conn->prepare($sql);
-        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->bindValue(":id", $id);
         $stmt->execute();
         $data= $stmt->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
+
+  public function getRandom(): array {
+    $sql= "SELECT * FROM quotes ORDER BY RANDOM() LIMIT 1";
+    $stmt= $this->conn->prepare($sql);
+    $stmt->execute();
+    $data= $stmt->fetch(PDO::FETCH_ASSOC);
+    return $data;
+  }
 
     public function update(array $curr, array $new): int {
         $sql="UPDATE Quote SET name= :name,
