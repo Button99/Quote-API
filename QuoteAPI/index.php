@@ -12,11 +12,9 @@ set_exception_handler('Runner\QuoteApi\handlers\ErrorHandler::handleException');
 
 header("Content-type: application/json; charset=UTF-8");
 
-$url= $_SERVER['REQUEST_URI'][2];
 $db= new SqliteConnection();
-$id= $_SERVER['REQUEST_URI'][2] ?? null;
-echo $id;
 $gateway= new QuoteGateway($db);
+$id= $_GET['id'];
 $controller= new QuoteController($gateway);
 $controller->processRequest($_SERVER['REQUEST_METHOD'], $id);
 ?>
