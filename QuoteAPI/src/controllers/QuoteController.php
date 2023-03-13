@@ -91,7 +91,12 @@ class QuoteController
         if(empty($data['name'])) {
             $errors[]= 'name is required';
         }
-        // add more custom vals.
+        if(empty($data['quote'])) {
+            $errors[]= 'quote is required';
+        }
+        if(empty($data['topic'])) {
+            $errors[]= 'quote is required';
+        }
 
         return $errors;
     }
